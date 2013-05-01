@@ -1,0 +1,11 @@
+﻿.fallback-message {
+    display: none;
+}
+body.impress-not-supported .fallback-message {
+    display: block;
+}
+
+
+.slide {
+    background-color: #eee;
+}
