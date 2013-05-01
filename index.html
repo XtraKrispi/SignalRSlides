@@ -53,7 +53,7 @@
                 <div>
                     <br>
                 </div>
-                <div>SignalR is a library for .NET that allows for realtime communication between the client and server, without needing to worry about XHR requests.&nbsp;</div>
+                <div>SignalR is a library for .NET that allows for realtime communication between the client and server, without needing to worry about javascript, webservices and XHR requests.&nbsp;</div>
                 <div>
                     <br>
                 </div>
@@ -64,17 +64,23 @@
                 <div>
                     <br>
                 </div>
+                <div>SignalR uses Websocket technology, if available, to provide true realtime communication with client and server.&nbsp;</div>
                 <div>
                     <br>
                 </div>
+                <div>If Websockets aren't available on the server/client, it falls back to a method that works, i.e. AJAX, polling, etc.</div>
+            </section>
+            <section>
+                <h2>What are Websockets?</h2>
                 <div>
-                    <br>
+                    Websockets is a technology that allows for persistent connections between the client and server via TCP. 
+                    <br><br>What this means is that communication can happen between client and server seamlessly and without the need to reestablish a connection.
+                    <br><br>
+                    Currently, all modern browsers support Websockets. It is not supported in Internet Explorer before version 10.
+                    <br><br>
+                    Websockets are supported only in IIS 8 on the server (for .NET development).
+                    Most Websocket libraries (SignalR included) will gracefully fall back to a different technology in order to maintain the same experience for the developer.
                 </div>
-                <div>SignalR uses Websockets if available to provide true realtime communication with client and server.&nbsp;</div>
-                <div>
-                    <br>
-                </div>
-                <div>If Websockets aren't available on the server/client, it falls back to a method that works, AJAX, polling, etc.</div>
             </section>
             <section>
                 <h2>Okay, but how do you set it up?</h2>
@@ -211,6 +217,24 @@ public class MyHub : Hub
                         Starts the SignalR connection. This is a required method, that returns a promise object indicating success or failure.
                     </span>                
                 </div>
+            </section>
+            <section>
+                <h2>What else can I do?</h2>
+                <div style="text-align: left;">SignalR allows for much control over broadcasting from the server, including the ability to target 
+                    <ul>
+                        <li>specific connections;</li>
+                        <li>specific groups of connections;</li>
+                        <li>everyone, as we saw before;</li>
+                        <li>or even everyone but the connection that sent the initial request</li>
+                    </ul>
+                <br><br>
+                It also exposes events on the hub that one can bind to when a connection is established, or disconnected, which allows for more flexibility on the server.
+            </section>
+            <section>
+                <h2>Questions?</h2>
+            </section>
+            <section>
+                <h2>Let's write an app!</h2>
             </section>
     </div>
 
