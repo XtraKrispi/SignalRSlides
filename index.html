@@ -53,7 +53,9 @@
                 <div>
                     <br>
                 </div>
-                <div>SignalR is a library for .NET that allows for realtime communication between the client and server, without needing to worry about javascript, webservices and XHR requests.&nbsp;</div>
+                <div>SignalR is an open source library for .NET that allows for realtime communication between the client and server, alleviating the need for boilerplate ajax, javascript, and other configuration.</div>
+                <br>
+                <div>At it purest, SignalR is truly realtime, with persistent connections between client and server.</div>
                 <div>
                     <br>
                 </div>
@@ -64,7 +66,10 @@
                 <div>
                     <br>
                 </div>
-                <div>SignalR uses Websocket technology, if available, to provide true realtime communication with client and server.&nbsp;</div>
+                <div>SignalR uses Websocket technology, if available, to provide true realtime communication with client and server.
+                <br><br>
+                SignalR makes it incredibly easy to call methods on the client from the server and vice versa.
+                </div>
                 <div>
                     <br>
                 </div>
@@ -72,13 +77,13 @@
             </section>
             <section>
                 <h2>What are Websockets?</h2>
-                <div>
+                <div style="font-size: 30px;">
                     Websockets is a technology that allows for persistent connections between the client and server via TCP. 
                     <br><br>What this means is that communication can happen between client and server seamlessly and without the need to reestablish a connection.
                     <br><br>
                     Currently, all modern browsers support Websockets. It is not supported in Internet Explorer before version 10.
                     <br><br>
-                    Websockets are supported only in IIS 8 on the server (for .NET development).
+                    Websockets are only supported in IIS 8 on the server (for .NET development).
                     Most Websocket libraries (SignalR included) will gracefully fall back to a different technology in order to maintain the same experience for the developer.
                 </div>
             </section>
@@ -114,7 +119,10 @@ protected void Application_Start()
 
                         </li>
                         <li>Add SignalR to your javascript
-                            <p>
+                            <p style="font-size: 24px;">
+                                <code>&lt;script src="~/Scripts/jquery-*.js"&gt;&lt;/script&gt;</code><br>
+                                <code>&lt;script src="~/Scripts/jquery.signalR-*.js"&gt;&lt;/script&gt;</code><br>
+
                                 <code>&lt;script src="~/signalr/hubs"&gt;&lt;/script&gt;</code>
                             </p>
                         </li>
@@ -125,7 +133,7 @@ protected void Application_Start()
                 <h2>How do we use it?</h2>
                 <div>
                     <p>
-                        SignalR has the concept of Hubs to interface between client and server.
+                        SignalR has the concept of a "Hub" to interface between client and server using dynamic types to allow for extremely easy use.
                     </p>
                     <br>
                     <p>
@@ -193,25 +201,25 @@ public class MyHub : Hub
             </section>
             <section>
                 <h2>Let's dig in</h2>
-                <div style="margin-bottom: 40px;">
+                <div style="margin-bottom: 40px;" class="fragment roll-in">
                     <pre><code>var myHub = $.connection.myHub;</code></pre>
                     <span style="font-size: 22px; text-align: justify;display:block;line-height:1;">
                         Provides a reference to our hub. SignalR exposes this object when connected to <code>~/signalr/hubs</code>. Note the javascript case convention.
                     </span>
                 </div>
-                <div style="margin-bottom: 40px;">
+                <div style="margin-bottom: 40px;" class="fragment roll-in">
                     <pre><code>myHub.server.sayHi($('#name').val())</code></pre>
                     <span style="font-size: 22px; text-align: justify;display:block;line-height:1;">
                         Calls a method on the server. Note that we have to explicitly state where the method we want to call resides. Also note the javascript case convention. A call in to the server returns a promise object, so we know if the call succeeded or not.
                     </span>
                 </div>
-                <div style="margin-bottom: 40px;">
+                <div style="margin-bottom: 40px;" class="fragment roll-in">
                     <pre><code>myHub.client.hi = function(name) { ... };</code></pre>
                     <span style="font-size: 22px; text-align: justify;display:block;line-height:1;">
                         Defines a function on the client, that the server can call in to. This method fires when we call it on the server. Please note that from the server, we can use the javascript casing, or C# casing.
                     </span>
                 </div>
-                <div style="margin-bottom: 40px;">
+                <div style="margin-bottom: 40px;" class="fragment roll-in">
                     <pre><code>$.connection.hub.start()</code></pre>
                     <span style="font-size: 22px; text-align: justify;display:block;line-height:1;">
                         Starts the SignalR connection. This is a required method, that returns a promise object indicating success or failure.
