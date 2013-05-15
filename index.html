@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>reveal.js - The HTML Presentation Framework</title>
+    <title>Realtime Web Applications with ASP.NET SignalR</title>
 
     <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
     <meta name="author" content="Hakim El Hattab">
@@ -55,7 +55,7 @@
                 </div>
                 <div>SignalR is an open source library for .NET that allows for realtime communication between the client and server, alleviating the need for boilerplate ajax, javascript, and other configuration.</div>
                 <br>
-                <div>At it purest, SignalR is truly realtime, with persistent connections between client and server.</div>
+                <div>At its purest, SignalR is truly realtime, with persistent connections between client and server.</div>
                 <div>
                     <br>
                 </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div>
                     <ol style="font-size: 30px">
-                        <li>Install ASP.NET SignalR
+                        <li class="fragment roll-in">Install ASP.NET SignalR
                             <p style="vertical-align: middle">
                                 NuGet:&nbsp;
                                 <code>
@@ -107,7 +107,7 @@
                                 </code>
                             </p>
                         </li>
-                        <li>If using MVC, SignalR hub routes must be mapped in Global.asax
+                        <li class="fragment roll-in">If using MVC and hubs, SignalR hub routes must be mapped in Global.asax
                             <p>
 <pre><code class="cs">
 protected void Application_Start()
@@ -118,7 +118,7 @@ protected void Application_Start()
                             </p>
 
                         </li>
-                        <li>Add SignalR to your javascript
+                        <li class="fragment roll-in">Add SignalR to your javascript
                             <p style="font-size: 24px;">
                                 <code>&lt;script src="~/Scripts/jquery-*.js"&gt;&lt;/script&gt;</code><br>
                                 <code>&lt;script src="~/Scripts/jquery.signalR-*.js"&gt;&lt;/script&gt;</code><br>
@@ -131,16 +131,17 @@ protected void Application_Start()
             </section>
             <section>
                 <h2>How do we use it?</h2>
-                <div>
+                <div style="font-size:26px;">
                     <p>
-                        SignalR has the concept of a "Hub" to interface between client and server using dynamic types to allow for extremely easy use.
+                        SignalR has the concept of a "Persistent Connection" to deal with communication between client and server.  It is further abstracted as a "Hub" to interface between client and server using dynamic types to allow for extremely easy use.
+                    </p>
+                    <br>
+                    <p>
+                        Think of a PersistentConnection a class that can send and receive messages, through specific events and methods such as Broadcast and OnReceived.  
                     </p>
                     <br>
                     <p>
                         Think of hubs as container classes for anything you may want to do when interfacing with the client.  
-                    </p>
-                    <br>
-                    <p>
                         It contains methods that call out to the client, and methods that the client calls in to.
                     </p>
                     <br>
@@ -148,6 +149,39 @@ protected void Application_Start()
                         Allows targeted broadcasts of messages based on connections, groups, etc.
                     </p>
                 </div>
+            </section>
+            <section>
+                <h2>Example PersistentConnection</h2>
+                    <div style="font-size: 26px;">
+                        <div class="fragment roll-in">
+                        <div style="text-align: justify;">We need to create a PersistentConnection class:</div><pre><code>public class SayHiPersistentConnection : PersistentConnection</code></pre>
+                        </div>
+                        <div class="fragment roll-in">
+                    <div style="text-align: justify;">Override the OnReceived method to intercept data from the client:</div>
+<pre><code>
+protected override Task OnReceived
+(IRequest request, string connectionId, string data)
+</code></pre>
+                    </div>
+                    <div class="fragment roll-in">
+<div style="text-align: justify;" >Use <code>Connection.Broadcast()</code> to send data to the clients connected.</div>
+</div>
+
+                    <div class="fragment roll-in"><div style="text-align: justify">On the client, start the connection:</div>
+<pre><code>
+var connection = $.connection('/connPath');
+connection.start();
+</code></pre>
+                    </div>
+<div class="fragment roll-in"><div style="text-align: justify;">Subscribe to any events from the server:</div>
+<pre><code>
+connection.received(function(data) { });
+</code></pre></div>
+<div class="fragment roll-in"><div style="text-align: justify;">Send a message to the server:</div>
+<pre><code>
+connection.send(data);
+</code></pre>
+</div>
             </section>
             <section>
                 <h2>Example Hub</h2>
@@ -174,12 +208,12 @@ public class MyHub : Hub
             <section>
                 <h2>Javascript</h2>
                 <div>
-<pre><code style="font-size:20px" class="js">
+<pre><code style="font-size:20px" class="js fragment roll-in">
 &lt;script src="Scripts/jquery-1.8.2.min.js"&gt;&lt;/script&gt;
 &lt;script src="Scripts/jquery.signalR-1.0.1.min.js"&gt;&lt;/script&gt;
 &lt;script src="~/signalr/hubs"&gt;&lt;/script&gt;
 </code></pre>
-<pre><code class="js" style="font-size: 16px">
+<pre><code class="js fragment roll-in" style="font-size: 16px">
 (function($) {
     var myHub = $.connection.myHub;
     $('#sayHi').click(function() {
@@ -228,15 +262,17 @@ public class MyHub : Hub
             </section>
             <section>
                 <h2>What else can I do?</h2>
-                <div style="text-align: left;">SignalR allows for much control over broadcasting from the server, including the ability to target 
+                <div style="text-align: left;">SignalR allows for quite a bit of control over broadcasting from the server, including the ability to target 
                     <ul>
-                        <li>specific connections;</li>
-                        <li>specific groups of connections;</li>
-                        <li>everyone, as we saw before;</li>
-                        <li>or even everyone but the connection that sent the initial request</li>
+                        <li class="fragment roll-in">specific connections;</li>
+                        <li class="fragment roll-in">specific groups of connections;</li>
+                        <li class="fragment roll-in">everyone, as we saw before;</li>
+                        <li class="fragment roll-in">or even everyone but the connection that sent the initial request</li>
                     </ul>
                 <br><br>
+                <div class="fragment roll-in">
                 It also exposes events on the hub that one can bind to when a connection is established, or disconnected, which allows for more flexibility on the server.
+                </div>
             </section>
             <section>
                 <h2>Questions?</h2>
