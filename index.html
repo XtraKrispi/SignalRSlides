@@ -152,33 +152,36 @@ protected void Application_Start()
             </section>
             <section>
                 <h2>Example PersistentConnection</h2>
-                    <div style="font-size: 26px;">
+                    <div style="font-size: 24px; overflow: auto; height: 600px">
                         <div class="fragment roll-in">
-                        <div style="text-align: justify;">We need to create a PersistentConnection class:</div><pre><code>public class SayHiPersistentConnection : PersistentConnection</code></pre>
+                        <div style="text-align: justify;">Register the connection in the Global.asax:</div><pre><code class="cs">RouteTable.Routes.MapConnection&lt;SayHiPersistentConnection&gt;("sayhi", "/sayhi");</code></pre>
+                        </div>
+                        <div class="fragment roll-in">
+                        <div style="text-align: justify;">We need to create a PersistentConnection class:</div><pre><code class="cs">public class SayHiPersistentConnection : PersistentConnection</code></pre>
                         </div>
                         <div class="fragment roll-in">
                     <div style="text-align: justify;">Override the OnReceived method to intercept data from the client:</div>
-<pre><code>
+<pre><code class="cs">
 protected override Task OnReceived
 (IRequest request, string connectionId, string data)
 </code></pre>
                     </div>
                     <div class="fragment roll-in">
-<div style="text-align: justify;" >Use <code>Connection.Broadcast()</code> to send data to the clients connected.</div>
+<div style="text-align: justify;" >Use <code class="cs">Connection.Broadcast()</code> to send data to the clients connected.</div>
 </div>
 
                     <div class="fragment roll-in"><div style="text-align: justify">On the client, start the connection:</div>
-<pre><code>
-var connection = $.connection('/connPath');
+<pre><code class="js">
+var connection = $.connection('/sayhi');
 connection.start();
 </code></pre>
                     </div>
 <div class="fragment roll-in"><div style="text-align: justify;">Subscribe to any events from the server:</div>
-<pre><code>
+<pre><code class="js">
 connection.received(function(data) { });
 </code></pre></div>
 <div class="fragment roll-in"><div style="text-align: justify;">Send a message to the server:</div>
-<pre><code>
+<pre><code class="js">
 connection.send(data);
 </code></pre>
 </div>
@@ -267,7 +270,7 @@ public class MyHub : Hub
                         <li class="fragment roll-in">specific connections;</li>
                         <li class="fragment roll-in">specific groups of connections;</li>
                         <li class="fragment roll-in">everyone, as we saw before;</li>
-                        <li class="fragment roll-in">or even everyone but the connection that sent the initial request</li>
+                        <li class="fragment roll-in">or even everyone but the connection that sent the initial request.</li>
                     </ul>
                 <br><br>
                 <div class="fragment roll-in">
